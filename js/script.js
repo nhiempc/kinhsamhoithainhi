@@ -5,6 +5,41 @@ const box = sheet.querySelector('.box');
 const btnBuy = document.getElementById('btnBuy');
 const btnGift = document.getElementById('btnGift');
 const toast = document.getElementById('toast');
+const loading = document.getElementById('loading');
+const successOverlay = document.getElementById('successOverlay');
+const successCloseBtn = document.getElementById('successCloseBtn');
+const successOkBtn = document.getElementById('successOkBtn');
+
+function showLoading(){
+  loading.classList.add('show');
+  loading.setAttribute('aria-hidden', 'false');
+}
+function hideLoading(){
+  loading.classList.remove('show');
+  loading.setAttribute('aria-hidden', 'true');
+}
+
+function openSuccessPopup(){
+  successOverlay.classList.add('show');
+  successOverlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeSuccessPopup(){
+  successOverlay.classList.remove('show');
+  successOverlay.setAttribute('aria-hidden', 'true');
+}
+
+// đóng bằng X / nút cảm ơn / click ra ngoài
+successCloseBtn.addEventListener('click', closeSuccessPopup);
+successOkBtn.addEventListener('click', closeSuccessPopup);
+successOverlay.addEventListener('click', (e) => {
+  if(e.target === successOverlay) closeSuccessPopup();
+});
+
+// ESC khi test desktop
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeSuccessPopup();
+});
 
 function openSheet() {
     sheet.classList.add('open');
@@ -19,11 +54,6 @@ function closeSheet() {
 }
 
 btnBuy.addEventListener('click', openSheet);
-
-btnGift.addEventListener('click', () => {
-    const el = document.getElementById('gift');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
 
 // Close sheet when tapping outside box
 sheet.addEventListener('click', (e) => {
@@ -65,6 +95,7 @@ const handleSubmitOrder = async (e) => {
 
     try {
         // Only attempt fetch if URL is configured (not the placeholder)
+        showLoading();
         if (
             GOOGLE_SCRIPT_URL &&
             !GOOGLE_SCRIPT_URL.includes("YOUR_GOOGLE_SCRIPT")
@@ -77,6 +108,7 @@ const handleSubmitOrder = async (e) => {
                 },
                 body: JSON.stringify(orderData),
             });
+            hideLoading();
         } else {
             console.log(
                 "Mocking order submission. Configure GOOGLE_SCRIPT_URL to save real data.",
@@ -84,16 +116,17 @@ const handleSubmitOrder = async (e) => {
             );
             // Simulate network delay if no URL
             await new Promise((resolve) => setTimeout(resolve, 1000));
+            hideLoading();
         }
     } catch (error) {
         console.error("Error submitting order:", error);
         alert("Có lỗi xảy ra khi gửi đơn hàng. Vui lòng thử lại.");
+        hideLoading();
     }
     e.target.reset();
     closeSheet();
 
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2600);
+    openSuccessPopup();
 }
 
 document.getElementById('orderForm').addEventListener('submit', (e) => handleSubmitOrder(e));

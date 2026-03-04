@@ -202,6 +202,7 @@
     </div>
 
     <div class="section" id="feedback">
+      <h2 style="margin-bottom: 10px;">Các đánh giá từ khách hàng</h2>
       <div class="carousel" aria-label="Carousel hình sản phẩm" data-carousel="B">
         <div class="slides">
           <!-- Slide 1 -->
@@ -248,6 +249,11 @@
       </div>
     </div>
 
+    <div class="section">
+      <h1 style="margin-bottom: 10px; font-size: 20px;" class="text-yellow">Phân loại - Ấn mua và chọn</h1>
+      <img src="./img/product4.png" alt="Combo">
+    </div>
+
     <!-- Bottom sheet order form -->
     <div class="sheet" id="sheet">
       <div class="box" role="dialog" aria-modal="true" aria-label="Đặt hàng">
@@ -267,28 +273,25 @@
 
           <div class="opt-group" role="radiogroup" aria-label="Chọn sản phẩm">
             <label class="opt">
-              <input type="radio" name="product" value="Sản phẩm 1" checked />
+              <input type="radio" name="product" value="Kinh sám hối thai nhi - (99k + 15k ship)" checked />
               <span class="dot"></span>
               <span class="txt">
-                <b>Sản phẩm 1</b>
-                <small>Gói tiêu chuẩn</small>
+                <b>Kinh sám hối thai nhi - (99k + 15k ship)</b>
               </span>
             </label>
 
             <label class="opt">
-              <input type="radio" name="product" value="Sản phẩm 2" />
+              <input type="radio" name="product" value="Combo - Kinh sám hối thai nhi + 2 vật phẩm giúp gia đạo bình an thuận lợi - (139k + 15k ship)" />
               <span class="dot"></span>
               <span class="txt">
-                <b>Sản phẩm 2</b>
-                <small>Gói kèm quà tặng nâng cao</small>
+                <b>Combo - Kinh sám hối thai nhi + 2 vật phẩm giúp gia đạo bình an thuận lợi - (139k + 15k ship)</b>
               </span>
             </label>
           </div>
           <input class="in" name="name" type="text" placeholder="Họ và tên" autocomplete="name" required />
           <input class="in" name="phone" type="tel" placeholder="Số điện thoại" autocomplete="tel" required />
-          <input class="in" name="address" type="text" placeholder="Địa chỉ nhận hàng" autocomplete="street-address"
+          <input class="in" name="address" type="text" placeholder="Địa chỉ cũ (trước sáp nhập)" autocomplete="street-address"
             required />
-          <input class="in" name="note" type="text" placeholder="Ghi chú (tuỳ chọn): 'chỉ nhắn tin xác nhận'..." />
 
           <button class="btn buy" type="submit" style="width:100%; padding:14px 14px; font-size:14px;">
             XÁC NHẬN ĐẶT SÁCH
@@ -297,21 +300,27 @@
           <div class="help">
             <div class="hrow"><span class="check">✓</span><span>Gói kín — không ghi nội dung nhạy cảm</span></div>
             <div class="hrow"><span class="check">✓</span><span>COD — thanh toán khi nhận hàng</span></div>
-            <div class="hrow"><span class="check">✓</span><span>Hỗ trợ qua Zalo (nếu bạn cần)</span></div>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast" role="status" aria-live="polite">
-      <div class="trow">
-        <div
-          style="width:26px; height:26px; border-radius:12px; background:rgba(34,211,238,0.16); border:1px solid rgba(34,211,238,0.22); display:grid; place-items:center;">
-          ✓</div>
-        <div>
-          <b>Đã ghi nhận thông tin</b>
-          <span>Chúng tôi sẽ xác nhận đơn theo ghi chú riêng tư bạn đã chọn.</span>
+    <!-- Success Popup (replaces toast) -->
+    <div class="success-overlay" id="successOverlay" aria-hidden="true">
+      <div class="success-popup" role="dialog" aria-modal="true" aria-label="Thành công">
+        <button class="success-close" type="button" id="successCloseBtn" aria-label="Đóng">
+          ✕
+        </button>
+
+        <div class="success-body">
+          <div class="success-title">
+            Pháp An chúc chị tu tập tinh tấn<br/>
+            phước báu tròn đầy!
+          </div>
+
+          <button class="success-action" type="button" id="successOkBtn">
+            PHÁP AN XIN CẢM ƠN
+          </button>
         </div>
       </div>
     </div>
@@ -322,19 +331,27 @@
         <div class="mini">
           <div class="thumb" aria-hidden="true">🕯️</div>
           <div class="txt">
-            <b>Sách Kinh Sám Hối Cho Thai Nhi</b>
-            <span>Gói kín • COD • Quà tặng kèm</span>
+            <b>Thỉnh Kinh Sám Hối Thai Nhi</b>
           </div>
         </div>
 
         <div class="actions">
-          <button class="btn cart" type="button" id="btnGift" aria-label="Xem quà tặng">🎁</button>
           <button class="btn buy" type="button" id="btnBuy">MUA NGAY</button>
         </div>
       </div>
     </div>
-    <script src="./js/script.js"></script>
   </div>
+  <!-- Fullscreen Loading Overlay -->
+  <div class="loading" id="loading" aria-hidden="true">
+    <div class="loading-box" role="status" aria-live="polite" aria-label="Đang xử lý">
+      <div class="spinner" aria-hidden="true"></div>
+      <div class="loading-text">
+        <b>Đang xử lý đơn hàng…</b>
+        <span>Vui lòng chờ trong giây lát</span>
+      </div>
+    </div>
+  </div>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>
